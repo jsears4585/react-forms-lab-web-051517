@@ -1,20 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-class TwitterMessage extends React.Component {
+class TwitterMessage extends Component {
   constructor() {
-    super();
+    super()
+    this.state = {
+      textInput: ''
+    };
+  }
 
-    this.state = {};
+  setCharacterCount = event => {
+    this.setState({
+      textInput: event.target.value
+    })
   }
 
   render() {
     return (
       <div>
         <strong>Your message:</strong>
-        <input type="text" />
+        <p>Characters Remaining: {this.props.maxChars - this.state.textInput.length}</p>
+        <input  type="text"
+                value={this.state.textInput}
+                onChange={this.setCharacterCount} />
       </div>
-    );
+    )
   }
 }
 
-export default TwitterMessage;
+TwitterMessage.defaultProps = { maxChars: 140 }
+TwitterMessage.propTypes = { maxChars: PropTypes.number }
+
+export default TwitterMessage
